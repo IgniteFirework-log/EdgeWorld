@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EdgeWorld | デジタル遊園地</title>
+    <meta
+      name="description"
+      content="心理学アトラクションを楽しめるデジタル遊園地 EdgeWorld。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Monoton&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <header class="hero">
+      <nav class="top-nav">
+        <p class="brand">EdgeWorld</p>
+        <a class="nav-link" href="#attractions">Attractions</a>
+      </nav>
+
+      <div class="hero-content reveal">
+        <p class="kicker">DIGITAL THEME PARK</p>
+        <h1>ようこそ、<br />デジタル遊園地へ。</h1>
+        <p class="lead">
+          心理学をテーマにした体験型アトラクションを公開中。
+          学びと遊びが重なる、オンラインテーマパークです。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#attractions"
+            >アトラクションを見る</a
+          >
+          <a class="btn btn-ghost" href="psychology.html">心理学エリアへ</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="attractions" class="section">
+        <div class="section-header reveal">
+          <h2>公開中のアトラクション</h2>
+          <p>現在は「心理学ミラーハウス」を公開しています。</p>
+        </div>
+        <div
+          id="attractionList"
+          class="attraction-grid"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <section id="roadmap" class="section roadmap">
+        <div class="section-header reveal">
+          <h2>お知らせ</h2>
+          <p>今後の予定や新しいアトラクションの情報をお知らせします。</p>
+        </div>
+        <ol class="timeline">
+          <li class="reveal"><span>Open</span> 心理学体験（MBTI など）</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 EdgeWorld - Digital Theme Park</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
