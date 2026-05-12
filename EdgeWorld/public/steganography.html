@@ -108,8 +108,18 @@
         <div class="canvas-wrap" id="canvasWrap" style="display: none">
           <div class="canvas-label">// ENCODED IMAGE PREVIEW</div>
           <canvas id="resultCanvas"></canvas>
+          <div class="download-row">
+            <a
+              class="btn btn-amber download-btn"
+              id="downloadImage"
+              href="#"
+              download="encoded.png"
+              aria-disabled="true"
+              >SAVE IMAGE</a
+            >
+          </div>
           <p class="hint">
-            右クリック → 名前を付けて画像を保存（PNG）でダウンロードできます
+            スマホは「SAVE IMAGE」から保存できます。PCは右クリック保存もOK
           </p>
         </div>
       </section>
@@ -127,6 +137,7 @@
       const extractOutput = document.getElementById("extractOutput");
       const resultCanvas = document.getElementById("resultCanvas");
       const canvasWrap = document.getElementById("canvasWrap");
+      const downloadImage = document.getElementById("downloadImage");
       const ctx = resultCanvas.getContext("2d", { willReadFrequently: true });
 
       const enc = new TextEncoder();
@@ -149,6 +160,13 @@
           reader.onerror = () => reject(new Error("ファイルの読み込みに失敗"));
           reader.readAsDataURL(file);
         });
+      }
+
+      function updateDownloadLink(filename) {
+        const dataUrl = resultCanvas.toDataURL("image/png");
+        downloadImage.href = dataUrl;
+        downloadImage.download = filename;
+        downloadImage.setAttribute("aria-disabled", "false");
       }
 
       function embed(imageData, message) {
@@ -200,6 +218,7 @@
         if (f) {
           lbl.textContent = f.name;
           btn.classList.add("selected");
+          downloadImage.setAttribute("aria-disabled", "true");
         }
       });
 
@@ -210,6 +229,7 @@
         if (f) {
           lbl.textContent = f.name;
           btn.classList.add("selected");
+          downloadImage.setAttribute("aria-disabled", "true");
         }
       });
 
@@ -246,6 +266,7 @@
           }
           ctx.putImageData(imageData, 0, 0);
           canvasWrap.style.display = "block";
+          updateDownloadLink("encoded.png");
           setStatus(
             embedStatus,
             "OK — 埋め込み完了。プレビューを確認してください。",
@@ -284,6 +305,7 @@
             "success",
           );
           canvasWrap.style.display = "block";
+          updateDownloadLink("decoded-preview.png");
         } catch (e) {
           setStatus(extractOutput, "ERROR: " + e.message, "error");
         }

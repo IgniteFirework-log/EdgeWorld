@@ -389,6 +389,25 @@ body::after {
   position: relative;
 }
 
+.download-row {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.download-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-btn[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 .canvas-label {
   font-family: var(--mono);
   font-size: 0.68rem;
