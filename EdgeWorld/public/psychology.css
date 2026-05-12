@@ -1,0 +1,231 @@
+:root {
+  --bg-1: #0c1220;
+  --bg-2: #18223b;
+  --bg-3: #0b0f1a;
+  --ink: #eef6ff;
+  --ink-soft: rgba(238, 246, 255, 0.7);
+  --accent-1: #7df9ff;
+  --accent-2: #d4f1ff;
+  --accent-3: #9aa8ff;
+  --card: rgba(13, 20, 35, 0.72);
+  --line: rgba(210, 234, 255, 0.12);
+  --shadow: 0 22px 70px rgba(5, 10, 20, 0.55);
+  --glass: rgba(255, 255, 255, 0.08);
+  --display: "Cormorant Garamond", serif;
+  --body: "Shippori Mincho B1", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  color: var(--ink);
+  background:
+    radial-gradient(
+      circle at 18% 20%,
+      rgba(125, 249, 255, 0.18),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 82% 12%,
+      rgba(154, 168, 255, 0.18),
+      transparent 42%
+    ),
+    linear-gradient(140deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
+  min-height: 100vh;
+  line-height: 1.9;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(135deg, rgba(210, 234, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(210, 234, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(125, 249, 255, 0.08), transparent 60%);
+  background-size:
+    42px 42px,
+    64px 64px,
+    100% 100%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px 72px;
+  position: relative;
+  z-index: 1;
+}
+
+.back-link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid rgba(125, 249, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(8, 14, 26, 0.6);
+  box-shadow: 0 0 18px rgba(125, 249, 255, 0.15);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.back-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-1);
+}
+
+.hero-content {
+  margin-top: 22px;
+  padding: 26px 28px 30px;
+  border-radius: 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 24, 45, 0.75),
+    rgba(10, 18, 32, 0.92)
+  );
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(125, 249, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content::after {
+  content: "";
+  position: absolute;
+  inset: -40% 20% auto auto;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 241, 255, 0.35),
+    transparent 60%
+  );
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hero-content h1 {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  margin: 10px 0 18px;
+  letter-spacing: 0.04em;
+  color: var(--accent-1);
+  text-shadow: 0 0 18px rgba(125, 249, 255, 0.35);
+}
+
+.kicker {
+  font-family: var(--display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--accent-3);
+  margin: 0;
+}
+
+.lead {
+  margin: 0;
+  max-width: 640px;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+}
+
+.section {
+  margin-top: 34px;
+  padding: 0;
+}
+
+.section-header h2 {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  margin: 0 0 8px;
+  color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(212, 241, 255, 0.25);
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.quick-links {
+  margin-top: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.quick-links a {
+  display: block;
+  text-decoration: none;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 18, 32, 0.85),
+    rgba(18, 28, 52, 0.75)
+  );
+  color: var(--ink);
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(125, 249, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.quick-links a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.25), transparent 45%),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(125, 249, 255, 0.25),
+      transparent 55%
+    );
+  opacity: 0.8;
+}
+
+.quick-links a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 70px rgba(5, 10, 20, 0.65);
+}
+
+.quick-links small {
+  display: block;
+  opacity: 0.8;
+  margin-top: 6px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .hero-content {
+    padding: 22px;
+  }
+
+  .back-link {
+    margin-bottom: 10px;
+  }
+}

@@ -242,32 +242,16 @@ body {
   display: inline-block;
 }
 
-.quick-links {
-  margin-top: 20px;
-  display: grid;
-  gap: 12px;
-}
-
-.quick-links a {
-  display: block;
-  text-decoration: none;
-  background: var(--card);
-  color: var(--ink);
-  border-radius: 14px;
-  padding: 14px 16px;
-  box-shadow: var(--shadow);
-}
-
-.quick-links small {
-  display: block;
-  opacity: 0.8;
-  margin-top: 4px;
-}
-
 .site-footer {
   text-align: center;
   padding: 24px 16px 36px;
   opacity: 0.85;
+}
+
+.disclaimer {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin-top: 6px;
 }
 
 .reveal {

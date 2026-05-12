@@ -7,6 +7,14 @@ const attractions = [
     href: "psychology.html",
     delay: "0.05s",
   },
+  {
+    title: "隠されたメッセージ",
+    tag: "Crypto",
+    description:
+      "画像の色の差にメッセージを隠し、埋め込みと抽出を体験する暗号学アトラクション。",
+    href: "steganography.html",
+    delay: "0.12s",
+  },
 ];
 
 function renderAttractions() {
