@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>隠されたメッセージ | EdgeWorld CRYPTO ZONE</title>
+    <meta
+      name="description"
+      content="CRYPTO ZONEのアトラクション。画像の色の小さな差にメッセージを隠す体験。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&family=Orbitron:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="steganography.css" />
+  </head>
+  <body>
+    <div class="page">
+      <nav class="site-nav">
+        <a class="logo" href="index.html"
+          >EDGE<span style="color: #fff">WORLD</span></a
+        >
+        <a class="back-link" href="index.html">← TOP</a>
+      </nav>
+
+      <header class="hero">
+        <div class="zone-label">CRYPTO ZONE</div>
+        <div class="hero-en">HIDDEN MESSAGE</div>
+        <h1>隠された<br />メッセージ</h1>
+        <p class="hero-desc">
+          画像に秘密を埋め込み、取り出す。<br />
+          目には見えない、でも確かにそこにある。
+        </p>
+      </header>
+
+      <section class="section">
+        <div class="section-label">// ABOUT</div>
+        <div class="explain-block">
+          画像は無数の色の点でできています。その色の数値をほんのわずかだけ変えても、人間の目にはほとんど分かりません。ステガノグラフィーはそのすき間に文字をこっそり忍ばせる技術です。
+        </div>
+        <div class="explain-block" style="margin-top: 12px">
+          暗号化が「内容を読めなくする」のとは違い、この技術は「メッセージの存在自体を隠します」。処理はすべてブラウザの中で完結し、外部には何も送られません。
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-label">// EXPERIENCE</div>
+        <div class="tool-grid">
+          <div class="tool-card">
+            <h3>ENCODE</h3>
+            <div>
+              <label for="embedImage">IMAGE FILE</label>
+              <button
+                class="file-btn"
+                id="embedImageBtn"
+                type="button"
+                onclick="document.getElementById('embedImage').click()"
+              >
+                <span class="file-btn-icon">📎</span>
+                <span class="file-btn-text" id="embedImageLabel"
+                  >画像を選んでください（タップ）</span
+                >
+              </button>
+              <input id="embedImage" type="file" accept="image/*" />
+            </div>
+            <div>
+              <label for="embedText">SECRET MESSAGE</label>
+              <textarea
+                id="embedText"
+                placeholder="ここにメッセージを入力..."
+              ></textarea>
+            </div>
+            <button class="btn" id="embedButton" type="button">EMBED →</button>
+            <div class="output-box" id="embedStatus" aria-live="polite"></div>
+          </div>
+
+          <div class="tool-card">
+            <h3>DECODE</h3>
+            <div>
+              <label for="extractImage">IMAGE FILE</label>
+              <button
+                class="file-btn file-btn-amber"
+                id="extractImageBtn"
+                type="button"
+                onclick="document.getElementById('extractImage').click()"
+              >
+                <span class="file-btn-icon">📎</span>
+                <span class="file-btn-text" id="extractImageLabel"
+                  >画像を選んでください（タップ）</span
+                >
+              </button>
+              <input id="extractImage" type="file" accept="image/*" />
+            </div>
+            <button
+              class="btn btn-amber"
+              id="extractButton"
+              type="button"
+              style="margin-top: 8px"
+            >
+              EXTRACT →
+            </button>
+            <div class="output-box" id="extractOutput" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap" style="display: none">
+          <div class="canvas-label">// ENCODED IMAGE PREVIEW</div>
+          <canvas id="resultCanvas"></canvas>
+          <div class="download-row">
+            <a
+              class="btn btn-amber download-btn"
+              id="downloadImage"
+              href="#"
+              download="encoded.png"
+              aria-disabled="true"
+              >SAVE IMAGE</a
+            >
+          </div>
+          <p class="hint">
+            スマホは「SAVE IMAGE」から保存できます。PCは右クリック保存もOK
+          </p>
+        </div>
+      </section>
+
+      <footer>© 2026 EdgeWorld — CRYPTO ZONE</footer>
+    </div>
+
+    <script>
+      const embedImageInput = document.getElementById("embedImage");
+      const embedTextInput = document.getElementById("embedText");
+      const embedButton = document.getElementById("embedButton");
+      const embedStatus = document.getElementById("embedStatus");
+      const extractImageInput = document.getElementById("extractImage");
+      const extractButton = document.getElementById("extractButton");
+      const extractOutput = document.getElementById("extractOutput");
+      const resultCanvas = document.getElementById("resultCanvas");
+      const canvasWrap = document.getElementById("canvasWrap");
+      const downloadImage = document.getElementById("downloadImage");
+      const ctx = resultCanvas.getContext("2d", { willReadFrequently: true });
+
+      const enc = new TextEncoder();
+      const dec = new TextDecoder();
+
+      function setStatus(el, msg, type) {
+        el.textContent = msg;
+        el.className = "output-box" + (type ? " " + type : "");
+      }
+
+      function loadImage(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error("画像の読み込みに失敗"));
+            img.src = reader.result;
+          };
+          reader.onerror = () => reject(new Error("ファイルの読み込みに失敗"));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function updateDownloadLink(filename) {
+        const dataUrl = resultCanvas.toDataURL("image/png");
+        downloadImage.href = dataUrl;
+        downloadImage.download = filename;
+        downloadImage.setAttribute("aria-disabled", "false");
+      }
+
+      function embed(imageData, message) {
+        const bytes = enc.encode(message);
+        const lenBuf = new Uint8Array(4);
+        new DataView(lenBuf.buffer).setUint32(0, bytes.length, false);
+        const payload = new Uint8Array([...lenBuf, ...bytes]);
+
+        const px = imageData.data;
+        const capacity = Math.floor(px.length / 4) * 3;
+        if (payload.length * 8 > capacity)
+          return { ok: false, error: "メッセージが長すぎます。" };
+
+        for (let i = 0; i < payload.length * 8; i++) {
+          const bit = (payload[Math.floor(i / 8)] >> (7 - (i % 8))) & 1;
+          const ch = Math.floor(i / 3) * 4 + (i % 3);
+          px[ch] = (px[ch] & 0xfe) | bit;
+        }
+        return { ok: true };
+      }
+
+      function extract(imageData) {
+        const px = imageData.data;
+        const capacity = Math.floor(px.length / 4) * 3;
+        if (capacity < 32) return { ok: false, error: "画像が小さすぎます。" };
+
+        let len = 0;
+        for (let i = 0; i < 32; i++) {
+          len = (len << 1) | (px[Math.floor(i / 3) * 4 + (i % 3)] & 1);
+        }
+        len = len >>> 0;
+
+        if (len === 0 || len > 100000 || 32 + len * 8 > capacity) {
+          return { ok: false, error: "メッセージが見つかりませんでした。" };
+        }
+
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len * 8; i++) {
+          const ch = Math.floor((32 + i) / 3) * 4 + ((32 + i) % 3);
+          bytes[Math.floor(i / 8)] |= (px[ch] & 1) << (7 - (i % 8));
+        }
+        return { ok: true, text: dec.decode(bytes) };
+      }
+
+      embedImageInput.addEventListener("change", () => {
+        const f = embedImageInput.files?.[0];
+        const btn = document.getElementById("embedImageBtn");
+        const lbl = document.getElementById("embedImageLabel");
+        if (f) {
+          lbl.textContent = f.name;
+          btn.classList.add("selected");
+          downloadImage.setAttribute("aria-disabled", "true");
+        }
+      });
+
+      extractImageInput.addEventListener("change", () => {
+        const f = extractImageInput.files?.[0];
+        const btn = document.getElementById("extractImageBtn");
+        const lbl = document.getElementById("extractImageLabel");
+        if (f) {
+          lbl.textContent = f.name;
+          btn.classList.add("selected");
+          downloadImage.setAttribute("aria-disabled", "true");
+        }
+      });
+
+      embedButton.addEventListener("click", async () => {
+        setStatus(embedStatus, "PROCESSING...", "");
+        const file = embedImageInput.files?.[0];
+        const message = embedTextInput.value.trim();
+        if (!file) {
+          setStatus(
+            embedStatus,
+            "ERROR: 画像ファイルを選択してください。",
+            "error",
+          );
+          return;
+        }
+        if (!message) {
+          setStatus(
+            embedStatus,
+            "ERROR: メッセージを入力してください。",
+            "error",
+          );
+          return;
+        }
+        try {
+          const img = await loadImage(file);
+          resultCanvas.width = img.width;
+          resultCanvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const imageData = ctx.getImageData(0, 0, img.width, img.height);
+          const result = embed(imageData, message);
+          if (!result.ok) {
+            setStatus(embedStatus, "ERROR: " + result.error, "error");
+            return;
+          }
+          ctx.putImageData(imageData, 0, 0);
+          canvasWrap.style.display = "block";
+          updateDownloadLink("encoded.png");
+          setStatus(
+            embedStatus,
+            "OK — 埋め込み完了。プレビューを確認してください。",
+            "success",
+          );
+        } catch (e) {
+          setStatus(embedStatus, "ERROR: " + e.message, "error");
+        }
+      });
+
+      extractButton.addEventListener("click", async () => {
+        setStatus(extractOutput, "PROCESSING...", "");
+        const file = extractImageInput.files?.[0];
+        if (!file) {
+          setStatus(
+            extractOutput,
+            "ERROR: 画像ファイルを選択してください。",
+            "error",
+          );
+          return;
+        }
+        try {
+          const img = await loadImage(file);
+          resultCanvas.width = img.width;
+          resultCanvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const imageData = ctx.getImageData(0, 0, img.width, img.height);
+          const result = extract(imageData);
+          if (!result.ok) {
+            setStatus(extractOutput, "ERROR: " + result.error, "error");
+            return;
+          }
+          setStatus(
+            extractOutput,
+            result.text || "(空のメッセージ)",
+            "success",
+          );
+          canvasWrap.style.display = "block";
+          updateDownloadLink("decoded-preview.png");
+        } catch (e) {
+          setStatus(extractOutput, "ERROR: " + e.message, "error");
+        }
+      });
+    </script>
+  </body>
+</html>
