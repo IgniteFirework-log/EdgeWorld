@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EdgeWorld | デジタル遊園地</title>
-    <meta
-      name="description"
-      content="心理学アトラクションを楽しめるデジタル遊園地 EdgeWorld。"
-    />
+    <meta name="description" content="デジタル遊園地 EdgeWorld。" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,6 +15,38 @@
   </head>
   <body>
     <div class="bg-grid" aria-hidden="true"></div>
+
+    <section
+      class="scrub-scene scrub-scene-open"
+      data-video-scrub
+      aria-label="EdgeWorld入園ゲート"
+    >
+      <div class="scrub-sticky">
+        <video
+          class="scrub-video"
+          muted
+          playsinline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="assets/video/edgeworld-open.mp4" type="video/mp4" />
+        </video>
+        <div class="scrub-shade" aria-hidden="true"></div>
+        <nav class="scrub-nav" aria-label="メインナビゲーション">
+          <p class="brand">EdgeWorld</p>
+          <a class="nav-link" href="#attractions">Attractions</a>
+        </nav>
+        <div class="scrub-copy">
+          <p class="kicker">DIGITAL THEME PARK</p>
+          <h1>スクロールして、<br />未知の入口へ。</h1>
+          <p>ゆっくり進んでゲートをくぐってください</p>
+        </div>
+        <div class="scroll-cue" aria-hidden="true">
+          <span>SCROLL TO ENTER</span>
+          <i></i>
+        </div>
+      </div>
+    </section>
 
     <header class="hero">
       <nav class="top-nav">
