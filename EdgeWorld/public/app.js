@@ -1,65 +1,3 @@
-const attractions = [
-  {
-    title: "心理学ミラーハウス",
-    tag: "Psychology",
-    description:
-      "MBTI などの心理学サイトを巡って、自分の思考や性格の傾向を発見する体験アトラクション。",
-    href: "psychology.html",
-    delay: "0.05s",
-  },
-  {
-    title: "隠されたメッセージ",
-    tag: "Crypto",
-    description:
-      "画像の色の差にメッセージを隠し、埋め込みと抽出を体験する暗号学アトラクション。",
-    href: "steganography.html",
-    delay: "0.12s",
-  },
-];
-
-function renderAttractions() {
-  const list = document.getElementById("attractionList");
-  if (!list) {
-    return;
-  }
-
-  list.innerHTML = attractions
-    .map(
-      (item) => `
-        <article class="card" style="animation-delay:${item.delay}">
-          <span class="badge">${item.tag}</span>
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
-          <p class="card-actions"><a class="card-link" href="${item.href}">このアトラクションへ</a></p>
-        </article>
-      `,
-    )
-    .join("");
-}
-
-function setupRevealAnimation() {
-  const targets = document.querySelectorAll(".reveal");
-  if (targets.length === 0) {
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.15,
-    },
-  );
-
-  targets.forEach((el) => observer.observe(el));
-}
-
 function setupVideoScrubs() {
   const scenes = document.querySelectorAll("[data-video-scrub]");
   if (scenes.length === 0) {
@@ -78,6 +16,10 @@ function setupVideoScrubs() {
 
     let duration = 0;
     const scrubSeconds = Number.parseFloat(scene.dataset.scrubSeconds || "");
+    const ease = Number.parseFloat(scene.dataset.scrubEase || "0.14");
+    const seekThreshold = Number.parseFloat(
+      scene.dataset.seekThreshold || "0.045",
+    );
     let targetTime = 0;
     let currentTime = 0;
     let frameRequest = 0;
@@ -92,8 +34,8 @@ function setupVideoScrubs() {
     };
 
     const renderFrame = () => {
-      currentTime += (targetTime - currentTime) * 0.18;
-      if (Math.abs(video.currentTime - currentTime) > 0.015) {
+      currentTime += (targetTime - currentTime) * ease;
+      if (Math.abs(video.currentTime - currentTime) > seekThreshold) {
         video.currentTime = currentTime;
       }
       frameRequest = window.requestAnimationFrame(renderFrame);
@@ -135,6 +77,4 @@ function setupVideoScrubs() {
   });
 }
 
-renderAttractions();
-setupRevealAnimation();
 setupVideoScrubs();

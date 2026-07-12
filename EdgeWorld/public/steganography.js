@@ -30,7 +30,7 @@ const extractImageLabel = document.getElementById("extractImageLabel");
 const extractButton = document.getElementById("extractButton");
 const extractOutput = document.getElementById("extractOutput");
 const bundledSampleMessage =
-  "英語IIIは楽単です。(このことは秘密にしてください。)";
+  "-----the hyper secret text-----\n英語IIIは楽単です。(このことは秘密にしてください。)";
 
 function updateMission(step) {
   const clamped = Math.min(Math.max(step, 1), 3);

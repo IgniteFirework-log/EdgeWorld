@@ -3,103 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EdgeWorld | デジタル遊園地</title>
-    <meta name="description" content="デジタル遊園地 EdgeWorld。" />
+    <title>EdgeWorld | Digital Theme Park</title>
+    <meta
+      name="description"
+      content="サイバーパンクなデジタル遊園地 EdgeWorld。心理学エリアとステガノグラフィーエリアへ入場できます。"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Monoton&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="home-body">
     <div class="bg-grid" aria-hidden="true"></div>
 
-    <section
-      class="scrub-scene scrub-scene-open"
-      data-video-scrub
-      aria-label="EdgeWorld入園ゲート"
-    >
-      <div class="scrub-sticky">
-        <video
-          class="scrub-video"
-          muted
-          playsinline
-          preload="auto"
-          aria-hidden="true"
-        >
-          <source src="assets/video/edgeworld-open.mp4" type="video/mp4" />
-        </video>
-        <div class="scrub-shade" aria-hidden="true"></div>
-        <nav class="scrub-nav" aria-label="メインナビゲーション">
-          <p class="brand">EdgeWorld</p>
-          <a class="nav-link" href="#attractions">Attractions</a>
-        </nav>
-        <div class="scrub-copy">
-          <p class="kicker">DIGITAL THEME PARK</p>
-          <h1>スクロールして、<br />未知の入口へ。</h1>
-          <p>ゆっくり進んでゲートをくぐってください</p>
-        </div>
-        <div class="scroll-cue" aria-hidden="true">
-          <span>SCROLL TO ENTER</span>
-          <i></i>
-        </div>
-      </div>
-    </section>
-
-    <header class="hero">
-      <nav class="top-nav">
-        <p class="brand">EdgeWorld</p>
-        <a class="nav-link" href="#attractions">Attractions</a>
-      </nav>
-
-      <div class="hero-content reveal">
-        <p class="kicker">DIGITAL THEME PARK</p>
-        <h1>ようこそ、<br />デジタル遊園地へ。</h1>
-        <p class="lead">
-          知をテーマにした体験型アトラクションを公開中。
-          学びと遊びが重なる、オンラインテーマパークです。
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#attractions"
-            >アトラクションを見る</a
-          >
-          <a class="btn btn-ghost" href="psychology.html">心理学エリアへ</a>
-          <a class="btn btn-ghost" href="steganography.html">暗号学エリアへ</a>
-        </div>
-      </div>
-    </header>
-
     <main>
-      <section id="attractions" class="section">
-        <div class="section-header reveal">
-          <h2>公開中のアトラクション</h2>
-          <p>心理学ミラーハウスと暗号学エリアを公開しています。</p>
-        </div>
-        <div
-          id="attractionList"
-          class="attraction-grid"
-          aria-live="polite"
-        ></div>
-      </section>
+      <section
+        class="scrub-scene home-portal"
+        data-video-scrub
+        data-scrub-seconds="10"
+        data-scrub-ease="0.11"
+        data-seek-threshold="0.06"
+        aria-label="EdgeWorld入園ゲート"
+      >
+        <div class="scrub-sticky">
+          <video
+            class="scrub-video"
+            muted
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+          >
+            <source src="assets/video/edgeworld-open-scrub.mp4" type="video/mp4" />
+          </video>
+          <div class="home-film" aria-hidden="true"></div>
+          <div class="home-scanline" aria-hidden="true"></div>
 
-      <section id="roadmap" class="section roadmap">
-        <div class="section-header reveal">
-          <h2>お知らせ</h2>
-          <p>今後の予定や新しいアトラクションの情報をお知らせします。</p>
+          <nav class="home-nav" aria-label="メインナビゲーション">
+            <a class="home-brand" href="index.html">EDGE<span>WORLD</span></a>
+            <span class="home-status">SCROLL / ENTER</span>
+          </nav>
+
+          <div class="home-title">
+            <p class="home-kicker">CYBERPUNK DIGITAL THEME PARK</p>
+            <h1>ENTER<br />EDGEWORLD</h1>
+            <p>
+              スクロールでゲートを進み、表示される入口からアトラクションを選んでください。
+            </p>
+          </div>
+
+          <div class="home-progress" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <div class="portal-card portal-card-tarot">
+            <span class="portal-id">EXTERNAL AREA</span>
+            <h2>NOCTURNE<br />FOREST</h2>
+            <p>夜の森の中を探索して、タロットカードを見つけるエリア。</p>
+            <a
+              href="https://nocturne-d6e57.web.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >ENTER THE FOREST</a>
+          </div>
+
+          <div class="portal-card portal-card-stegano">
+            <span class="portal-id">AREA 01</span>
+            <h2>HIDDEN SIGNAL<br />GALLERY</h2>
+            <p>画像に埋め込まれた文章を検出し、自分でもメッセージを隠せるエリア。</p>
+            <a href="steganography.html">ENTER GALLERY</a>
+          </div>
+
+          <div class="home-final">
+            <span>CHOOSE YOUR ATTRACTION</span>
+          </div>
         </div>
-        <ol class="timeline">
-          <li class="reveal"><span>Open</span> 心理学体験（MBTI など）</li>
-          <li class="reveal"><span>Open</span> ステガノグラフィー体験</li>
-        </ol>
       </section>
     </main>
-
-    <footer class="site-footer">
-      <p>© 2026 EdgeWorld - Digital Theme Park</p>
-      <p class="disclaimer">※ご利用にあたっては自己責任でお願いします。</p>
-    </footer>
 
     <script src="app.js"></script>
   </body>

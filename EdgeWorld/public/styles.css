@@ -33,12 +33,22 @@ body {
   min-height: 100vh;
 }
 
+.home-body {
+  background: #02070c;
+  color: #eaffff;
+  overflow-x: hidden;
+}
+
 .scrub-scene {
   --scrub-progress: 0;
   position: relative;
   z-index: 3;
   height: 320vh;
   background: #02090b;
+}
+
+.home-portal {
+  height: 300vh;
 }
 
 .scrub-sticky {
@@ -62,6 +72,240 @@ body {
   z-index: -3;
   object-fit: cover;
   background: #02090b;
+}
+
+.home-film,
+.home-scanline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home-film {
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 42%, transparent 0 26%, rgba(1, 6, 10, 0.18) 48%, rgba(1, 6, 10, 0.72) 100%),
+    linear-gradient(90deg, rgba(255, 194, 71, 0.16), transparent 28%, transparent 72%, rgba(0, 255, 225, 0.2)),
+    linear-gradient(0deg, rgba(1, 6, 10, 0.78), transparent 46%, rgba(1, 6, 10, 0.55));
+}
+
+.home-scanline {
+  z-index: 4;
+  opacity: 0.16;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 4px,
+    rgba(255, 255, 255, 0.08) 5px
+  );
+  mix-blend-mode: overlay;
+}
+
+.home-nav {
+  position: absolute;
+  top: 24px;
+  right: clamp(18px, 4vw, 54px);
+  left: clamp(18px, 4vw, 54px);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-brand {
+  color: #f8ffff;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-shadow: 0 0 24px rgba(0, 255, 225, 0.5);
+}
+
+.home-brand span {
+  color: #00ffe1;
+}
+
+.home-status,
+.portal-id,
+.home-kicker,
+.home-final {
+  font-family: "Share Tech Mono", monospace;
+  letter-spacing: 0.18em;
+}
+
+.home-status {
+  color: rgba(234, 255, 255, 0.72);
+  font-size: 0.72rem;
+}
+
+.home-title {
+  position: absolute;
+  left: clamp(18px, 7vw, 110px);
+  bottom: clamp(98px, 15vh, 160px);
+  z-index: 6;
+  max-width: min(760px, calc(100% - 36px));
+  opacity: clamp(0, calc(1 - var(--scrub-progress) * 3.5), 1);
+  transform: translateY(calc(var(--scrub-progress) * -34px));
+}
+
+.home-kicker {
+  margin: 0;
+  color: #00ffe1;
+  font-size: 0.78rem;
+  text-shadow: 0 0 18px rgba(0, 255, 225, 0.5);
+}
+
+.home-title h1 {
+  margin: 12px 0 16px;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(3.1rem, 11vw, 9rem);
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  text-shadow:
+    0 0 28px rgba(0, 255, 225, 0.35),
+    0 10px 60px #000;
+}
+
+.home-title p:last-child {
+  max-width: 610px;
+  margin: 0;
+  color: rgba(234, 255, 255, 0.9);
+  font-weight: 800;
+  line-height: 1.9;
+  text-shadow: 0 2px 16px #000;
+}
+
+.home-progress {
+  position: absolute;
+  right: clamp(18px, 4vw, 54px);
+  bottom: 34px;
+  left: clamp(18px, 4vw, 54px);
+  z-index: 8;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.home-progress span {
+  display: block;
+  width: calc(var(--scrub-progress) * 100%);
+  height: 100%;
+  background: linear-gradient(90deg, #ffc247, #00ffe1);
+  box-shadow: 0 0 18px #00ffe1;
+}
+
+.portal-card {
+  position: absolute;
+  z-index: 7;
+  width: min(360px, calc(50% - 42px));
+  min-height: 220px;
+  padding: 18px 20px 20px;
+  border: 1px solid var(--portal-line, rgba(0, 255, 225, 0.45));
+  background:
+    linear-gradient(135deg, var(--portal-glow, rgba(0, 255, 225, 0.1)), rgba(2, 8, 14, 0.12)),
+    rgba(2, 8, 14, 0.58);
+  box-shadow:
+    inset 0 0 24px var(--portal-inner, rgba(0, 255, 225, 0.07)),
+    0 20px 55px rgba(0, 0, 0, 0.36),
+    0 0 22px var(--portal-shadow, rgba(0, 255, 225, 0.12));
+  backdrop-filter: blur(9px);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+.portal-card h2 {
+  margin: 10px 0 12px;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  line-height: 1;
+}
+
+.portal-card p {
+  margin: 0 0 16px;
+  color: rgba(234, 255, 255, 0.78);
+  line-height: 1.65;
+  font-size: 0.92rem;
+}
+
+.portal-card a {
+  display: inline-flex;
+  min-height: 38px;
+  padding: 0 15px;
+  align-items: center;
+  color: #02070c;
+  background: #00ffe1;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  box-shadow: 0 0 24px rgba(0, 255, 225, 0.3);
+}
+
+.portal-card a:hover {
+  background: #ffc247;
+  color: #02070c;
+}
+
+.portal-id {
+  color: var(--portal-accent, #00ffe1);
+  font-size: 0.72rem;
+}
+
+.portal-card-tarot {
+  --portal-accent: #ffcf6b;
+  --portal-line: rgba(255, 207, 107, 0.38);
+  --portal-glow: rgba(255, 207, 107, 0.08);
+  --portal-inner: rgba(255, 207, 107, 0.05);
+  --portal-shadow: rgba(255, 207, 107, 0.1);
+  left: max(28px, calc(50% - 390px));
+  bottom: clamp(82px, 12vh, 130px);
+  opacity: clamp(0, calc((var(--scrub-progress) - 0.66) * 9), 1);
+  transform: translateY(calc((0.76 - var(--scrub-progress)) * 70px));
+}
+
+.portal-card-tarot {
+  background:
+    linear-gradient(135deg, rgba(255, 207, 107, 0.08), rgba(2, 8, 14, 0.22)),
+    rgba(2, 8, 14, 0.5);
+}
+
+.portal-card-tarot h2 {
+  color: rgba(234, 255, 255, 0.82);
+}
+
+.portal-card-tarot a {
+  background: transparent;
+  color: #ffcf6b;
+  border: 1px solid rgba(255, 207, 107, 0.58);
+  box-shadow: inset 0 0 18px rgba(255, 207, 107, 0.08);
+}
+
+.portal-card-tarot a:hover {
+  background: #ffcf6b;
+  color: #02070c;
+}
+
+.portal-card-stegano {
+  --portal-accent: #00ffe1;
+  --portal-line: rgba(0, 255, 225, 0.5);
+  --portal-glow: rgba(0, 255, 225, 0.12);
+  --portal-inner: rgba(0, 255, 225, 0.08);
+  --portal-shadow: rgba(0, 255, 225, 0.14);
+  right: max(28px, calc(50% - 390px));
+  bottom: clamp(82px, 12vh, 130px);
+  opacity: clamp(0, calc((var(--scrub-progress) - 0.72) * 9), 1);
+  transform: translateY(calc((0.82 - var(--scrub-progress)) * 70px));
+}
+
+.home-final {
+  position: absolute;
+  right: 18px;
+  bottom: 58px;
+  left: 18px;
+  z-index: 6;
+  color: rgba(234, 255, 255, 0.65);
+  text-align: center;
+  font-size: 0.74rem;
+  opacity: clamp(0, calc((var(--scrub-progress) - 0.82) * 8), 1);
 }
 
 .scrub-shade {
@@ -379,12 +623,72 @@ body {
     height: 260vh;
   }
 
+  .home-portal {
+    height: 240vh;
+  }
+
   .scrub-nav {
     padding-top: 16px;
   }
 
   .scrub-copy {
     bottom: 110px;
+  }
+
+  .home-nav {
+    top: 18px;
+  }
+
+  .home-status {
+    display: none;
+  }
+
+  .home-title {
+    bottom: 124px;
+  }
+
+  .home-title h1 {
+    font-size: clamp(3rem, 18vw, 5.2rem);
+  }
+
+  .home-title p:last-child {
+    font-size: 0.92rem;
+  }
+
+  .portal-card {
+    width: calc(100% - 32px);
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .portal-card-tarot,
+  .portal-card-stegano {
+    right: 16px;
+    left: 16px;
+    top: auto;
+    transform: none;
+  }
+
+  .portal-card-tarot {
+    bottom: 220px;
+    opacity: clamp(0, calc((var(--scrub-progress) - 0.68) * 9), 1);
+  }
+
+  .portal-card-stegano {
+    bottom: 70px;
+    opacity: clamp(0, calc((var(--scrub-progress) - 0.74) * 9), 1);
+  }
+
+  .portal-card h2 {
+    font-size: 1.35rem;
+  }
+
+  .portal-card p {
+    display: none;
+  }
+
+  .home-final {
+    display: none;
   }
 
   .hero {
